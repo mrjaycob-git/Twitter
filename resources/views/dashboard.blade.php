@@ -54,7 +54,7 @@
         <hr>
         <div class="mt-3">
             <div class="card">
-                @foreach ($users as $user)
+                @foreach($posts as $post)
                 @include('_template.card')
                 @endforeach
             </div>

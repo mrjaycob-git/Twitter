@@ -3,30 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class DashboardController extends Controller
 {
     public function index() 
     {
-        $users = [
-            [
-                "name" => "Lukino",
-                "vek" => "19"
-            ],
-            [
-                "name" => "Maxik",
-                "vek" => "13"
-            ],
-            [
-                "name" => "Saska",
-                "vek" => "1"
-            ]
-        ];
+        Post::create([
+            'content' => 'Hello world',
+            'likes' => 1,
+        ]);
 
         return view(
             'dashboard',
             [
-                "users" => $users    
+                "posts" => Post::orderBy('likes', 'DESC')->get()
             ]
         );
     }
