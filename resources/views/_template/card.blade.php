@@ -8,6 +8,13 @@
                     </a></h5>
             </div>
         </div>
+        <div>
+            <form action="{{route('post.destroy', $post->id)}}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="card-body">

@@ -9,11 +9,6 @@ class DashboardController extends Controller
 {
     public function index() 
     {
-        Post::create([
-            'content' => 'Hello world',
-            'likes' => 1,
-        ]);
-
         return view(
             'dashboard',
             [

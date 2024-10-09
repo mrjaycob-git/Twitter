@@ -10,4 +10,9 @@ class Post extends Model
     use HasFactory;
 
     public $fillable = ['content', 'likes'];
+
+    public function setContent($content)
+    {
+        $this->attributes['content'] = $content;
+    }
 }
