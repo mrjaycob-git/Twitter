@@ -44,9 +44,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
-        <h4> Share yours ideas </h4>
+
+        <h4> Share your ideas </h4>
         <div class="row">
-            <form action="{{route('post.store')}}" method="POST">
+            <form action="{{ route('post.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <textarea class="form-control" name="content" id="idea" rows="3"></textarea>
@@ -57,10 +58,13 @@
             </form>
         </div>
         <hr>
+
         <div class="mt-3">
-            <div class="card">
+            <div id="posts-container" class="card">
                 @foreach($posts as $post)
-                @include('_template.card')
+                <div id="post-{{ $post->id }}" class="single-post">
+                    @include('_template.card', ['post' => $post])
+                </div>
                 @endforeach
             </div>
         </div>
@@ -71,29 +75,16 @@
                 <h5 class="">Search</h5>
             </div>
             <div class="card-body">
-                <input placeholder="...
-                " class="form-control w-100" type="text"
-                    id="search">
+                <input placeholder="Search" class="form-control w-100" type="text" id="search">
                 <button class="btn btn-dark mt-2"> Search</button>
             </div>
         </div>
+
         <div class="card mt-3">
             <div class="card-header pb-0 border-0">
                 <h5 class="">Who to follow</h5>
             </div>
             <div class="card-body">
-                <div class="hstack gap-2 mb-3">
-                    <div class="avatar">
-                        <a href="#!"><img class="avatar-img rounded-circle"
-                                src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Mario" alt=""></a>
-                    </div>
-                    <div class="overflow-hidden">
-                        <a class="h6 mb-0" href="#!">Mario Brother</a>
-                        <p class="mb-0 small text-truncate">@Mario</p>
-                    </div>
-                    <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i
-                            class="fa-solid fa-plus"> </i></a>
-                </div>
                 <div class="hstack gap-2 mb-3">
                     <div class="avatar">
                         <a href="#!"><img class="avatar-img rounded-circle"
@@ -113,4 +104,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    function showSinglePost(postId) {
+        // Hide all posts
+        document.querySelectorAll('.single-post').forEach(function(post) {
+            post.style.display = 'none';
+        });
+
+        // Show only the clicked post
+        document.getElementById('post-' + postId).style.display = 'block';
+    }
+</script>
 @endsection
