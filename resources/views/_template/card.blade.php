@@ -24,7 +24,6 @@
         {{ $post->content }}
     </p>
     
-    <!-- View Button Added Here -->
     <div class="mb-2">
         <button class="btn btn-primary btn-sm" onclick="showSinglePost({{ $post->id }})">View</button>
     </div>
@@ -43,13 +42,30 @@
     </div>
 
     <div>
-        <div class="mb-3">
-            <textarea class="fs-6 form-control" rows="1"></textarea>
-        </div>
         <div>
-            <button class="btn btn-primary btn-sm">Post Comment</button>
+            <form action="{{ route('comments.store', $post->id) }}" method="POST">
+                @csrf
+                <div class="input-group mb-3">
+                    <input type="text" name="content" class="form-control" placeholder="Write your comment..." required>
+                    <button class="btn btn-primary btn-sm" type="submit">Post Comment</button>
+                </div>
+            </form>
         </div>
         <hr>
+    </div>
+
+    <!-- Display Comments -->
+    <div>
+        @if($post->comments->isNotEmpty())
+            <h6>Comments:</h6>
+            @foreach($post->comments as $comment)
+                <div class="mb-2">
+                    <strong>User:</strong> {{ $comment->content }} <small class="text-muted">{{ $comment->created_at }}</small>
+                </div>
+            @endforeach
+        @else
+            <p>No comments yet.</p>
+        @endif
     </div>
 
     <div>
