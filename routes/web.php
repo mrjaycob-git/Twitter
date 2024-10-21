@@ -24,3 +24,6 @@ Route::post('/posts/{post}/comments', [PostController::class, 'store'])->name('c
 
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
+Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+
+

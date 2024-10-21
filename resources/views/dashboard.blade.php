@@ -47,10 +47,11 @@
 
         <h4> Share your ideas </h4>
         <div class="row">
+            <!-- Form for creating a post -->
             <form action="{{ route('post.store') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <textarea class="form-control" name="content" id="idea" rows="3"></textarea>
+                    <textarea class="form-control" name="content" id="idea" rows="3" required></textarea>
                 </div>
                 <div class="">
                     <button class="btn btn-dark"> Share </button>
@@ -75,8 +76,11 @@
                 <h5 class="">Search</h5>
             </div>
             <div class="card-body">
-                <input placeholder="Search" class="form-control w-100" type="text" id="search">
-                <button class="btn btn-dark mt-2"> Search</button>
+                <!-- Search Bar -->
+                <form action="{{ route('posts.search') }}" method="GET" class="d-flex mb-3">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search posts..." aria-label="Search" required>
+                    <button class="btn btn-dark" type="submit">Search</button>
+                </form>
             </div>
         </div>
 

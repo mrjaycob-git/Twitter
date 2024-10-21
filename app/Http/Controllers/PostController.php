@@ -9,6 +9,10 @@ class PostController extends Controller
 {
     public function store(Request $request)
     {
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+        
         $post = new Post();
         $post->setContent($request->content);
         $post->likes = 0;
@@ -27,7 +31,7 @@ class PostController extends Controller
 
     public function update(Request $request, $postId)
     {
-        $post = Post::findOrfail($postId);
+        $post = Post::findOrFail($postId);
         $post->setcontent($request->content);
         $post->save();
 
@@ -39,5 +43,14 @@ class PostController extends Controller
         $post = Post::findOrFail($postId);
         
         return view('posts.show', compact('post'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $posts = Post::where('content', 'LIKE', '%' . $query . '%')->get();
+
+        return view('dashboard', compact('posts'))->with('success', 'Výsledky vyhľadávania pre "' . $query . '"');
     }
 }
