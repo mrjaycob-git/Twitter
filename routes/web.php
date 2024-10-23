@@ -7,8 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', [DashboardController::class, 'index'] )->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::post('/', [PostController::class, 'store'] )->name('post.store');
 
@@ -26,4 +27,6 @@ Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name
 
 Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
 
+Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
 
+Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
