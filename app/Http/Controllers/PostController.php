@@ -9,48 +9,36 @@ class PostController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'content' => 'required|string|max:255',
+        request() -> validate([
+            "content" => 'required|min:1|max:255'
         ]);
         
         $post = new Post();
-        $post->setContent($request->content);
+        $post->content = $request->input('content');
         $post->likes = 0;
         $post->save();
-
-        return redirect()->route('dashboard')->with('success', 'Okrrrrrrrr');
+        return redirect() -> route("dashboard.index") -> with("success", "Post was created");
     }
 
     public function destroy($postId)
     {
         $post = Post::findOrFail($postId);
         $post->delete();
-
-        return redirect()->route('dashboard')->with('success', 'Vymazalo ta jak rytmus komentare');
-    }
-
-    public function update(Request $request, $postId)
-    {
-        $post = Post::findOrFail($postId);
-        $post->setcontent($request->content);
-        $post->save();
-
-        return redirect()->route('dashboard')->with('success', 'updatelo ta jak ektor kurvu');
+        return redirect() -> route("dashboard.index") -> with("success", "Post was deleted");
     }
 
     public function show($postId)
     {
         $post = Post::findOrFail($postId);
-        
         return view('posts.show', compact('post'));
     }
 
-    public function search(Request $request)
+    public function update(Request $request, $postId)
     {
-        $query = $request->input('query');
+        $post = Post::findOrFail($postId);
+        $post->content = request()->input('content');
+        $post->save();
 
-        $posts = Post::where('content', 'LIKE', '%' . $query . '%')->get();
-
-        return view('dashboard', compact('posts'))->with('success', 'Výsledky vyhľadávania pre "' . $query . '"');
+        return redirect() -> route("dashboard.index") -> with("success", "Post was edited");
     }
 }

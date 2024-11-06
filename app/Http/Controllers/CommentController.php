@@ -21,6 +21,6 @@ class CommentController extends Controller
         $comment->post()->associate($post);
         $comment->save();
 
-        return redirect()->route('dashboard')->with('success', 'Comment added successfully!');
+        return redirect()->route('dashboard.index')->with('success', 'Comment added successfully!');
     }
 }

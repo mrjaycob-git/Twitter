@@ -11,6 +11,8 @@ class Post extends Model
 
     public $fillable = ['content', 'likes'];
 
+    public $rules = ['likes' => 'nullable'];
+
     public function setContent($content)
     {
         $this->attributes['content'] = $content;
